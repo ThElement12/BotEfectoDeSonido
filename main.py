@@ -25,9 +25,8 @@ async def on_voice_state_update(member, before, after):
     if member.id == bot.user.id:
         return
 
-    if after.channel is not None:
+    if not before.channel and after.channel:
         voice = discord.utils.get(bot.voice_clients, channel__guild__id=after.channel.guild.id)
-        print("Kedyavlos")
         voice.play(discord.FFmpegPCMAudio('Tiku tiku tikuuu.mp3'), after=lambda e: print('done', e))
         while voice.is_playing():
             await asyncio.sleep(1)
@@ -101,7 +100,6 @@ async def tiradera(ctx):
         vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
         if not vc or not vc.is_connected():
             vc = await voice_channel.connect()
-
         vc.play(discord.FFmpegPCMAudio('Tiradera.mp3'), after=lambda e: print('done', e))
         while vc.is_playing():
             await asyncio.sleep(1)
@@ -112,7 +110,6 @@ async def tiradera(ctx):
 
 
 bot.run(TOKEN)
-
 
 #TODO
 #Sonido de aldeano
