@@ -9,11 +9,14 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='.')
 
+
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
+
 GUILD_VC_TIMER = {}
+
 
 # this event runs when user leave / join / defen / mute
 @bot.event
@@ -89,6 +92,7 @@ async def effect(ctx):
     else:
         await bot.say('User is not in a channel.')
 
+
 @bot.command(name="tiradera")
 async def tiradera(ctx):
     voice_channel = ctx.author.voice.channel
@@ -103,5 +107,6 @@ async def tiradera(ctx):
         vc.stop()
     else:
         await bot.say('User is not in a channel.')
+
 
 bot.run(TOKEN)
