@@ -89,4 +89,19 @@ async def effect(ctx):
     else:
         await bot.say('User is not in a channel.')
 
+@bot.command(name="tiradera")
+async def tiradera(ctx):
+    voice_channel = ctx.author.voice.channel
+    if voice_channel is not None:
+        # grab user's voice channel
+        # create StreamPlayer
+        vc = await voice_channel.connect()
+        vc.play(discord.FFmpegPCMAudio('Tiradera.mp3'), after=lambda e: print('done', e))
+        while vc.is_playing():
+            await asyncio.sleep(1)
+        # disconnect after the player has finished
+        vc.stop()
+    else:
+        await bot.say('User is not in a channel.')
+
 bot.run(TOKEN)
