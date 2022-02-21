@@ -17,8 +17,114 @@ async def on_ready():
 
 GUILD_VC_TIMER = {}
 
+#COMMANDS
 
-# this event runs when user leave / join / defen / mute
+@bot.command(name='tiku')
+async def join(ctx):
+    # grab the user who sent the command
+    voice_channel = ctx.author.voice.channel
+    # only play music if user is in a voice channel
+    if voice_channel is not None:
+        await voice_channel.connect()
+        await ctx.send("Llegue yo, klk")
+    else:
+        await bot.say('User is not in a channel.')
+
+
+@bot.command(name="notiku")
+async def leave(ctx):
+    await ctx.send("Se me cuida, hablamo' el martes")
+    await ctx.voice_client.disconnect()
+
+
+@bot.command(name="stop")
+async def stop_talking(ctx):
+    voice_channel = ctx.author.voice.channel
+    if voice_channel is not None:
+        vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+    vc.stop()
+
+
+@bot.command(name="effect")
+async def effect(ctx):
+    voice_channel = ctx.author.voice.channel
+    if voice_channel is not None:
+        vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+        if not vc or not vc.is_connected():
+            vc = await voice_channel.connect()
+
+        vc.play(discord.FFmpegPCMAudio('Sounds/Tiku tiku tikuuu.mp3'), after=lambda e: print('done', e))
+        while vc.is_playing():
+            await asyncio.sleep(1)
+        # disconnect after the player has finished
+        vc.stop()
+    else:
+        await bot.send('User is not in a channel.')
+
+
+@bot.command(name="tiradera")
+async def tiradera(ctx):
+    voice_channel = ctx.author.voice.channel
+    if voice_channel is not None:
+        vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+        if not vc or not vc.is_connected():
+            vc = await voice_channel.connect()
+        vc.play(discord.FFmpegPCMAudio('Sounds/Tiradera.mp3'), after=lambda e: print('done', e))
+        while vc.is_playing():
+            await asyncio.sleep(1)
+        # disconnect after the player has finished
+        vc.stop()
+    else:
+        await bot.send('User is not in a channel.')
+
+
+@bot.command(name="desorden")
+async def tiradera(ctx):
+    voice_channel = ctx.author.voice.channel
+    if voice_channel is not None:
+        vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+        if not vc or not vc.is_connected():
+            vc = await voice_channel.connect()
+        vc.play(discord.FFmpegPCMAudio('Sounds/Desorden.mp3'), after=lambda e: print('done', e))
+        while vc.is_playing():
+            await asyncio.sleep(1)
+        # disconnect after the player has finished
+        vc.stop()
+    else:
+        await bot.send('User is not in a channel.')
+
+@bot.command(name="quehuevo")
+async def quehuevo(ctx):
+    voice_channel = ctx.author.voice.channel
+    if voice_channel is not None:
+        vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+        if not vc or not vc.is_connected():
+            vc = await voice_channel.connect()
+        vc.play(discord.FFmpegPCMAudio('Sounds/QueWevo.mp3'), after=lambda e: print('done', e))
+        while vc.is_playing():
+            await asyncio.sleep(1)
+        # disconnect after the player has finished
+        vc.stop()
+    else:
+        await bot.send('User is not in a channel.')
+
+
+#EVENTS
+@bot.listen('on_message')
+async def on_message(message):
+    if message.content == "Que jablador":
+        await message.channel.send("Hmmm que bajo a gaveta")
+    elif message.content == "A tu edad":
+        await message.channel.send("Va seguiii'")
+    elif message.content == "Mr. Worldwide":
+        user_id = "<@381106739174440962>"
+        await message.channel.send(f'{user_id} dale, a mi me gusta la pepsi')
+    elif message.content == "Hacks":
+        user_id = "<@213129423728279554>"
+        await message.channel.send(f'{user_id} loco te llaman')
+
+
+
 @bot.event
 async def on_voice_state_update(member, before, after):
     # if event is triggered by the bot? return
@@ -26,12 +132,13 @@ async def on_voice_state_update(member, before, after):
         return
 
     if not before.channel and after.channel:
-        voice = discord.utils.get(bot.voice_clients, channel__guild__id=after.channel.guild.id)
-        voice.play(discord.FFmpegPCMAudio('Tiku tiku tikuuu.mp3'), after=lambda e: print('done', e))
-        while voice.is_playing():
-            await asyncio.sleep(1)
-        # disconnect after the player has finished
-        voice.stop()
+        if member.id != "213466096718708737":
+            voice = discord.utils.get(bot.voice_clients, channel__guild__id=after.channel.guild.id)
+            voice.play(discord.FFmpegPCMAudio('Sounds/Tiku tiku tikuuu.mp3'), after=lambda e: print('done', e))
+            while voice.is_playing():
+                await asyncio.sleep(1)
+            # disconnect after the player has finished
+            voice.stop()
     # when before.channel != None that means user has left a channel
     if before.channel is not None:
         voice = discord.utils.get(bot.voice_clients, channel__guild__id=before.channel.guild.id)
@@ -57,60 +164,11 @@ async def on_voice_state_update(member, before, after):
                 if GUILD_VC_TIMER[before.channel.guild.id] >= 5:
                     await voice.disconnect()
                     return
-
-
-@bot.command(name='tiku')
-async def join(ctx):
-    # grab the user who sent the command
-    voice_channel = ctx.author.voice.channel
-    # only play music if user is in a voice channel
-    if voice_channel is not None:
-        await voice_channel.connect()
-    else:
-        await bot.say('User is not in a channel.')
-
-
-@bot.command(name="notiku")
-async def leave(ctx):
-    await ctx.send("byee")
-    await ctx.voice_client.disconnect()
-
-
-@bot.command(name="effect")
-async def effect(ctx):
-    voice_channel = ctx.author.voice.channel
-    if voice_channel is not None:
-        vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
-        if not vc or not vc.is_connected():
-            vc = await voice_channel.connect()
-
-        vc.play(discord.FFmpegPCMAudio('Tiku tiku tikuuu.mp3'), after=lambda e: print('done', e))
-        while vc.is_playing():
-            await asyncio.sleep(1)
-        # disconnect after the player has finished
-        vc.stop()
-    else:
-        await bot.send('User is not in a channel.')
-
-
-@bot.command(name="tiradera")
-async def tiradera(ctx):
-    voice_channel = ctx.author.voice.channel
-    if voice_channel is not None:
-        vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
-        if not vc or not vc.is_connected():
-            vc = await voice_channel.connect()
-        vc.play(discord.FFmpegPCMAudio('Tiradera.mp3'), after=lambda e: print('done', e))
-        while vc.is_playing():
-            await asyncio.sleep(1)
-        # disconnect after the player has finished
-        vc.stop()
-    else:
-        await bot.send('User is not in a channel.')
-
-
 bot.run(TOKEN)
 
 #TODO
 #Sonido de aldeano
 #Sonido cuando alguien se desmutea
+#Sonido vas a seguirrr
+
+#Escribir jablador y responder, que bajo a gaveta
