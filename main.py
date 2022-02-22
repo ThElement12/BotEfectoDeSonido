@@ -112,15 +112,20 @@ async def quehuevo(ctx):
 #EVENTS
 @bot.listen('on_message')
 async def on_message(message):
-    if message.content == "Que jablador":
+    if message.content.str.lower() == "que jablador":
         await message.channel.send("Hmmm que bajo a gaveta")
-    elif message.content == "A tu edad":
+    elif message.content.str.lower() == "a tu edad":
         await message.channel.send("Va seguiii'")
-    elif message.content == "Mr. Worldwide":
+    elif message.content.str.lower() == "mr. worldwide":
         user_id = "<@381106739174440962>"
         await message.channel.send(f'{user_id} dale, a mi me gusta la pepsi')
-    elif message.content == "Hacks":
+    elif message.content.str.lower() == "hacks":
         user_id = "<@213129423728279554>"
+        await message.channel.send(f'{user_id} loco te llaman')
+    elif message.content.str.lower() == "klk" or message.content.str.lower() == "hola" or message.content.str.lower() == "hello":
+        await message.chanel.send("Klk dame lu' de lo mio, pa' donde la vuelta?")
+    elif message.content.str.lower() == "rata" or message.content.str.lower() == "raton":
+        user_id = "<@463892349806706691>"
         await message.channel.send(f'{user_id} loco te llaman')
 
 
