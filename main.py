@@ -150,13 +150,12 @@ async def on_voice_state_update(member, before, after):
         return
 
     if not before.channel and after.channel:
-        if "213466096718708737" in member.id:
-            voice = discord.utils.get(bot.voice_clients, channel__guild__id=after.channel.guild.id)
-            voice.play(discord.FFmpegPCMAudio('Sounds/Tiku tiku tikuuu.mp3'), after=lambda e: print('done', e))
-            while voice.is_playing():
-                await asyncio.sleep(1)
-            # disconnect after the player has finished
-            voice.stop()
+        voice = discord.utils.get(bot.voice_clients, channel__guild__id=after.channel.guild.id)
+        voice.play(discord.FFmpegPCMAudio('Sounds/Tiku tiku tikuuu.mp3'), after=lambda e: print('done', e))
+        while voice.is_playing():
+            await asyncio.sleep(1)
+        # disconnect after the player has finished
+        voice.stop()
     # when before.channel != None that means user has left a channel
     if before.channel is not None:
         voice = discord.utils.get(bot.voice_clients, channel__guild__id=before.channel.guild.id)
