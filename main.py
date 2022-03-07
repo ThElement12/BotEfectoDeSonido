@@ -1,11 +1,12 @@
-import os
 import asyncio
+import os
+
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+TOKEN = os.getenv('DISCORD_BETA_TOKEN')
 
 bot = commands.Bot(command_prefix='.')
 
@@ -17,7 +18,8 @@ async def on_ready():
 
 GUILD_VC_TIMER = {}
 
-#COMMANDS
+
+# COMMANDS
 
 @bot.command(name='tiku')
 async def join(ctx):
@@ -93,6 +95,23 @@ async def tiradera(ctx):
     else:
         await bot.send('User is not in a channel.')
 
+
+@bot.command(name="babaji")
+async def tiradera(ctx):
+    voice_channel = ctx.author.voice.channel
+    if voice_channel is not None:
+        vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+        if not vc or not vc.is_connected():
+            vc = await voice_channel.connect()
+        vc.play(discord.FFmpegPCMAudio('Sounds/Babaji.mp3'), after=lambda e: print('done', e))
+        while vc.is_playing():
+            await asyncio.sleep(1)
+        # disconnect after the player has finished
+        vc.stop()
+    else:
+        await bot.send('User is not in a channel.')
+
+
 @bot.command(name="quehuevo")
 async def quehuevo(ctx):
     voice_channel = ctx.author.voice.channel
@@ -107,6 +126,7 @@ async def quehuevo(ctx):
         vc.stop()
     else:
         await bot.send('User is not in a channel.')
+
 
 @bot.command(name="burro")
 async def quehuevo(ctx):
@@ -123,10 +143,10 @@ async def quehuevo(ctx):
     else:
         await bot.send('User is not in a channel.')
 
-#EVENTS
+
+# EVENTS
 @bot.listen('on_message')
 async def on_message(message):
-
     if "que jablador" in message.content.lower():
         await message.channel.send("Hmmm que bajo a gaveta")
     elif "a tu edad" in message.content.lower():
@@ -142,6 +162,7 @@ async def on_message(message):
     elif "rata" in message.content.lower() or "raton" in message.content.lower():
         user_id = "<@463892349806706691>"
         await message.channel.send(f'{user_id} loco te llaman')
+
 
 @bot.event
 async def on_voice_state_update(member, before, after):
@@ -181,11 +202,11 @@ async def on_voice_state_update(member, before, after):
                 if GUILD_VC_TIMER[before.channel.guild.id] >= 5:
                     await voice.disconnect()
                     return
+
+
 bot.run(TOKEN)
 
-#TODO
-#Sonido de aldeano
-#Sonido cuando alguien se desmutea
-#Sonido vas a seguirrr
-
-#Escribir jablador y responder, que bajo a gaveta
+# TODO
+# Sonido de aldeano
+# Sonido cuando alguien se desmutea
+# Sonido vas a seguirrr
