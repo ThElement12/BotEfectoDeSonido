@@ -119,7 +119,7 @@ async def eldiablo(ctx):
         vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
         if not vc or not vc.is_connected():
             vc = await voice_channel.connect()
-        vc.play(discord.FFmpegPCMAudio('Sounds/Babaji.mp3'), after=lambda e: print('done', e))
+        vc.play(discord.FFmpegPCMAudio('Sounds/Ojala Me Lleve El Diablo.mp3'), after=lambda e: print('done', e))
         while vc.is_playing():
             await asyncio.sleep(1)
         # disconnect after the player has finished
