@@ -81,7 +81,7 @@ async def tiradera(ctx):
 
 
 @bot.command(name="desorden")
-async def tiradera(ctx):
+async def desorden(ctx):
     voice_channel = ctx.author.voice.channel
     if voice_channel is not None:
         vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
@@ -97,7 +97,23 @@ async def tiradera(ctx):
 
 
 @bot.command(name="babaji")
-async def tiradera(ctx):
+async def babaji(ctx):
+    voice_channel = ctx.author.voice.channel
+    if voice_channel is not None:
+        vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+        if not vc or not vc.is_connected():
+            vc = await voice_channel.connect()
+        vc.play(discord.FFmpegPCMAudio('Sounds/Babaji.mp3'), after=lambda e: print('done', e))
+        while vc.is_playing():
+            await asyncio.sleep(1)
+        # disconnect after the player has finished
+        vc.stop()
+    else:
+        await bot.send('User is not in a channel.')
+
+
+@bot.command(name="eldiablo")
+async def eldiablo(ctx):
     voice_channel = ctx.author.voice.channel
     if voice_channel is not None:
         vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
@@ -129,7 +145,7 @@ async def quehuevo(ctx):
 
 
 @bot.command(name="burro")
-async def quehuevo(ctx):
+async def burro(ctx):
     voice_channel = ctx.author.voice.channel
     if voice_channel is not None:
         vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
