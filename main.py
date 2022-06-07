@@ -178,6 +178,10 @@ async def on_message(message):
     elif "rata" in message.content.lower() or "raton" in message.content.lower():
         user_id = "<@463892349806706691>"
         await message.channel.send(f'{user_id} loco te llaman')
+    elif "mamichula" in message.content.lower().replace(" ", ""):
+        user_id1 = "<@529073285963579412>"
+        user_id2 = "<@743517096486502470>"
+        await message.channel.send(f'Cual? {user_id1} o {user_id2}?')
 
 
 @bot.event
