@@ -30,6 +30,7 @@ def getRandomSound():
         'Sounds/Burro.mp3',
         'Sounds/paparapapa.m4a',
         'Sounds/Pueblo seczo.m4a',
+        'Sounds/GigaChad.mp3',
         'Sounds/Tiku tiku tikuuu.mp3'
     ]
     value = randint(0, len(sounds))
@@ -120,6 +121,22 @@ async def augh(ctx):
         if not vc or not vc.is_connected():
             vc = await voice_channel.connect()
         vc.play(discord.FFmpegPCMAudio('Sounds/Auuughhht.mp3'), after=lambda e: print('done', e))
+        while vc.is_playing():
+            await asyncio.sleep(1)
+        # disconnect after the player has finished
+        vc.stop()
+    else:
+        await bot.send('User is not in a channel.')
+
+
+@bot.command(name="ellapi")
+async def ellapi(ctx):
+    voice_channel = ctx.author.voice.channel
+    if voice_channel is not None:
+        vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+        if not vc or not vc.is_connected():
+            vc = await voice_channel.connect()
+        vc.play(discord.FFmpegPCMAudio('Sounds/El lapi.m4a'), after=lambda e: print('done', e))
         while vc.is_playing():
             await asyncio.sleep(1)
         # disconnect after the player has finished
@@ -232,6 +249,22 @@ async def paparapapa(ctx):
         if not vc or not vc.is_connected():
             vc = await voice_channel.connect()
         vc.play(discord.FFmpegPCMAudio('Sounds/paparapapa.m4a'), after=lambda e: print('done', e))
+        while vc.is_playing():
+            await asyncio.sleep(1)
+        # disconnect after the player has finished
+        vc.stop()
+    else:
+        await bot.send('User is not in a channel.')
+
+
+@bot.command(name="gigachad")
+async def gigachad(ctx):
+    voice_channel = ctx.author.voice.channel
+    if voice_channel is not None:
+        vc = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+        if not vc or not vc.is_connected():
+            vc = await voice_channel.connect()
+        vc.play(discord.FFmpegPCMAudio('Sounds/GigaChad.mp3'), after=lambda e: print('done', e))
         while vc.is_playing():
             await asyncio.sleep(1)
         # disconnect after the player has finished
